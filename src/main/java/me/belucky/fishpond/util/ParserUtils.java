@@ -4,6 +4,7 @@
  */
 package me.belucky.fishpond.util;
 
+import java.util.Date;
 import java.util.Map;
 
 import me.belucky.fishpond.core.parser.IParser;
@@ -43,6 +44,21 @@ public class ParserUtils {
 	 */
 	public static Long stringToLong(String input) {
 		IParser<Long> parser =  ParserFactory.getParser(ParserEnum.NUMBER);
+		return parser.parse(input);
+	}
+	
+	/**
+	  * 将字符串解析成日期
+	  *  支持如下格式：<ol>
+	 * <li>{2016-04-01|17:00:00}</li>
+	 * <li>{W4|17:00:00},往后最近的一个周四的17点</li>
+	 * <li>{D3|17:00:00},3天后的17点</li>
+	 * </ol>
+	 * @param input
+	 * @return
+	 */
+	public static Date stringToDate(String input) {
+		IParser<Date> parser =  ParserFactory.getParser(ParserEnum.DATE);
 		return parser.parse(input);
 	}
 

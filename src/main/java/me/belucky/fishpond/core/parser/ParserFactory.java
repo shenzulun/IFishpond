@@ -4,6 +4,7 @@
  */
 package me.belucky.fishpond.core.parser;
 
+import me.belucky.fishpond.core.parser.impl.DateParser;
 import me.belucky.fishpond.core.parser.impl.HtmlParser;
 import me.belucky.fishpond.core.parser.impl.JsonParser;
 import me.belucky.fishpond.core.parser.impl.NumberParser;
@@ -76,6 +77,9 @@ public class ParserFactory {
 				break;
 			case REPLACE_STRING:
 				parser = (IParser<T>) new ReplaceStringParser();
+				break;
+			case DATE:
+				parser = (IParser<T>) new DateParser();
 				break;
 			default:
 				parser = (IParser<T>) new JsonParser(cls);

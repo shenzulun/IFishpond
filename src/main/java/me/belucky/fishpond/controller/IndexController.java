@@ -4,6 +4,7 @@
  */
 package me.belucky.fishpond.controller;
 
+import me.belucky.fishpond.core.task.TaskInitCenter;
 
 /**
  * Description: 
@@ -13,8 +14,20 @@ package me.belucky.fishpond.controller;
  */
 public class IndexController extends BaseController{
 	
+	public Class<?> setObj() {
+		return null;
+	}
+
+	public void go(Object dto, String methodName) {
+	}
+	
 	public void index() {
 		renderText("Hello JFinal World.");
+	}
+	
+	public void admin(){
+		setAttr("tasks",TaskInitCenter.getTaskList());
+		render("admin/admin.html");
 	}
 
 }

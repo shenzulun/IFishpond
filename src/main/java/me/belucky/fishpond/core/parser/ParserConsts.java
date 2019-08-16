@@ -20,6 +20,10 @@ public final class ParserConsts {
 	 */
 	public static final String PARSER_REPLACE_STRING = "REPLACE_STRING";
 	/**
+	 * 日期解析
+	 */
+	public static final String PARSER_DATE = "DATE";
+	/**
 	 * json解析
 	 */
 	public static final String PARSER_JSON = "JSON";

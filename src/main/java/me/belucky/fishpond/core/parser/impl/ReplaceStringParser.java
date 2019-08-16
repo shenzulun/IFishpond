@@ -8,6 +8,9 @@ import me.belucky.fishpond.core.parser.AbstractParser;
 
 /**
  * Description: 字符串替换解析器
+ * input: hello ${name}
+ * map: name: world
+ * output: hello world
  * @author shenzulun
  * @date 2019-08-16
  * @version 1.0
@@ -15,7 +18,7 @@ import me.belucky.fishpond.core.parser.AbstractParser;
 public class ReplaceStringParser extends AbstractParser<String>{
 
 	/**
-	 * 替换类似${XX}的字符串
+	  *  替换类似${XX}的字符串
 	 * @param input
 	 * @param map
 	 * @return

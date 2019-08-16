@@ -30,6 +30,14 @@ public enum ParserEnum {
 		}
 	},
 	/**
+	 * 日期解析
+	 */
+	DATE{
+		public String toString(){
+			return ParserConsts.PARSER_DATE;
+		}
+	},
+	/**
 	 * json格式
 	 */
 	JSON{
