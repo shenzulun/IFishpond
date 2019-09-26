@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head>
+	<title>配置管理</title>
+	<#include "../common/_header.html"/>
+	<script type="text/javascript">
+		$(document).ready(function(){	
+			
+			$('#validateShell').click(function(){
+				
+				$.ajax({
+				   type: "POST",
+				   url: "autorun",
+				   data: "methodName=validateShell",
+				   success: function(data){				
+			            $('#myModal').modal('show');	
+			            $("#modal_log div").append(data.retMsg); 
+			            $("#modal_log").scrollTop($("#modal_log div").height() - $("#modal_log").height());	
+				   },
+				   error: function (XMLHttpRequest, textStatus, errorThrown) {
+					    this; 
+					}
+				});					
+
+			})
+
+			$('#runTaskBtn').click(function(){
+				var taskId = $('#taskId').val();
+				$.ajax({
+				   type: "POST",
+				   url: "autorun",
+				   data: "methodName=runTask&msgDTO.msg=" + taskId,
+				   success: function(data){				
+			            $('#myModal').modal('show');	
+			            $("#modal_log div").append(data.retMsg); 
+			            $("#modal_log").scrollTop($("#modal_log div").height() - $("#modal_log").height());	
+				   },
+				   error: function (XMLHttpRequest, textStatus, errorThrown) {
+					    this; 
+					}
+				});					
+			})
+
+		})
+		
+		function runTask(taskId){
+			var taskBtn = '#' + taskId + 'Btn';
+			$(taskBtn).attr('disabled',true);
+			$.ajax({
+                type: "POST",
+                url: "autorun",
+                data: "methodName=runTask&msgDTO.msg=" + taskId,
+                success: function(data){             
+                     $('#myModal').modal('show');    
+                     $("#modal_log div").append(data.retMsg); 
+                     $("#modal_log").scrollTop($("#modal_log div").height() - $("#modal_log").height()); 
+                     $(taskBtn).attr('disabled',false);
+                     //location.reload();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                	alert(errorThrown);
+                	$(taskBtn).attr('disabled',false);
+                     this; 
+                 }
+             }); 
+	    }
+
+	</script>
+</head>
+<body>
+	
+<div class="container" style="width:80%">
+<form id="form-autorun" class="form-signin">
+		
+	    
+</form>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr class="danger">
+        <th class="layout-center">编号</th>
+        <th class="layout-center">任务名称</th>
+        <th class="layout-center">任务实例</th>
+        <th class="layout-center">首次运行日期</th>
+        <th class="layout-center">上次运行日期</th>
+        <th class="layout-center">运行间隔</th>
+        <th class="layout-center">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+         <#list tasks as task>
+        <tr>
+            <td>${task_index + 1}</td>
+            <td>${task.taskName}</td>
+            <td>${task.taskClassPath}</td>
+            <td>${task.firstExpectStart}</td>
+            <td>${task.lastRunDateStr}</td>
+            <td>${task.intervalExpr}</td>   
+            <td><button id="${task.taskId}Btn" class="btn btn-success" onclick="runTask('${task.taskId}')">运行</button></td>  
+        </tr>
+       </#list>    
+    </tbody>
+  </table>
+</div>
+
+<!-- 
+<div class="form-signin">
+<div class="input-group">
+        <span class="input-group-addon">任务名称</span>
+        <select id="taskId" class="form-control">
+            <#list tasks as task>
+                <option value="${task.taskId}">${task.taskName}</option>
+            </#list>  
+        </select>
+        <span id="runTaskBtn" class="input-group-addon btn btn-primary">运行</span>
+</div>
+</div>
+-->
+</div>
+<#include "../common/_modal.html"/>
+<#include "../common/_footer.html"/>
+</body>
